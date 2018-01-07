@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const routeProduct = express.Router();
 
@@ -21,20 +22,21 @@ routeProduct.get('/:productID', (req, res, next) => {
 routeProduct.post('/', (req, res, next) => {
     
     // Instancia de un nuevo producto dentro del objeto constaructor del modelo
-    const product = new Product({
-        _id : new mongoose.Types.ObjectId(),
-        nombre : req.body.nombre,
-        precio : req.body.precio
+    const producto = new Product({
+        _id: new mongoose.Types.ObjectId(),
+        nombre: req.body.nombre,
+        precio: req.body.precio
     });
 
-    res.save().then(result => {
+    producto.save().then(result => {
         console.log(result);
-    }).cath(err => console.log(err));
+    }).catch(err => console.log(err));
 
-    res.status(200).json({
-        message: `Product was found ${productID}`,
-        product
+    res.status(201).json({
+        message: "Product saved ",
+        "Nuevo_producto" : product
     });
+
 });
 
 routeProduct.patch('/:productID', (req, res, next) => {
