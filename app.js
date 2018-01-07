@@ -2,9 +2,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 
 const routeProduct = require('./routes/products');
 const routeOrder = require('./routes/orders');
+
+// Mongoose conection
+mongoose.connect('mongodb://node-shop:' + proccess.env.MONGO_ATLAS_PWD +'@node-rest-shop-shard-00-00-umxws.mongodb.net:27017,node-rest-shop-shard-00-01-umxws.mongodb.net:27017,node-rest-shop-shard-00-02-umxws.mongodb.net:27017/test?ssl=true&replicaSet=node-rest-shop-shard-0&authSource=admin', {
+    useMongoClient : true
+});
 
 // INIT APP
 const app = express();
