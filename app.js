@@ -8,9 +8,7 @@ const routeProduct = require('./routes/products');
 const routeOrder = require('./routes/orders');
 
 // Mongoose conection
-mongoose.connect('mongodb://node-shop:' + proccess.env.MONGO_ATLAS_PWD +'@node-rest-shop-shard-00-00-umxws.mongodb.net:27017,node-rest-shop-shard-00-01-umxws.mongodb.net:27017,node-rest-shop-shard-00-02-umxws.mongodb.net:27017/test?ssl=true&replicaSet=node-rest-shop-shard-0&authSource=admin', {
-    useMongoClient : true
-});
+mongoose.connect('mongodb://node-shop:'+process.env.MONGO_ATLAS_PWD +'@node-rest-shop-shard-00-00-umxws.mongodb.net:27017,node-rest-shop-shard-00-01-umxws.mongodb.net:27017,node-rest-shop-shard-00-02-umxws.mongodb.net:27017/test?ssl=true&replicaSet=node-rest-shop-shard-0&authSource=admin');
 
 // INIT APP
 const app = express();
