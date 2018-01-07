@@ -15,10 +15,15 @@ routeProduct.get('/:productID', (req, res, next) => {
     });
 });
 
-routeProduct.post('/:productID', (req, res, next) => {
+routeProduct.post('/', (req, res, next) => {
     const productID = req.params.productID;
-    res.status(200).send({
-        message: `Product was found ${productID}`
+    const product = {
+        nombre: req.body.nombre,
+        precio: req.body.precio
+    }
+    res.status(200).json({
+        message: `Product was found ${productID}`,
+        product
     });
 });
 

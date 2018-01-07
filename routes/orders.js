@@ -14,9 +14,14 @@ routeOrder.get('/:orderID', (req, res, next) => {
     });
 });
 
-routeOrder.post('/:orderID', (req, res, next) => {
-    res.status(200).send({
-        message : 'Order was created'
+routeOrder.post('/', (req, res, next) => {
+    const order = {
+        productoId: req.body.productoId,
+        cantidad: req.body.cantidad
+    }
+    res.status(200).json({
+        message : 'Order was created',
+        order
     });
 });
 
