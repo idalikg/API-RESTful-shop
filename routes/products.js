@@ -12,11 +12,25 @@ routeProduct.get('/', (req, res, next) => {
     });
 });
 
-routeProduct.get('/:productID', (req, res, next) => {
-    const productID = req.params.productID;
-    res.status(201).send({
-        message: `Product was fetched ${productID}`
+routeProduct.get("/:productID", (req, res, next) => {
+    const productoID = req.params.productID;
+
+    var query = Product.findById(productoID);
+
+    query.exec().then(doc=>{
+        if (doc) {
+            res.status(200).json({
+                message: 'Producto Encontrado',
+                doc
+                });
+            } else {
+                res.status(404).json({message: 'Valor ID inválido'});
+        }
+    }).catch(err=>{
+        console.log(err);
+        res.status(500).json({ERROR: err});
     });
+
 });
 
 routeProduct.post('/', (req, res, next) => {
@@ -28,13 +42,19 @@ routeProduct.post('/', (req, res, next) => {
         precio: req.body.precio
     });
 
-    producto.save().then(result => {
+    producto.save()
+    .then(result => {
         console.log(result);
-    }).catch(err => console.log(err));
-
-    res.status(201).json({
-        message: "Product saved ",
-        "Nuevo_producto" : product
+        res.status(200).json({
+            message: "Product saved ",
+            "Nuevo_producto" : producto
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            Error : err
+        });
     });
 
 });

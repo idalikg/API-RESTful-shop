@@ -8,7 +8,7 @@ const routeProduct = require('./routes/products');
 const routeOrder = require('./routes/orders');
 
 // Mongoose conection
-mongoose.connect('mongodb://node-shop:'+process.env.MONGO_ATLAS_PWD +'@node-rest-shop-shard-00-00-umxws.mongodb.net:27017,node-rest-shop-shard-00-01-umxws.mongodb.net:27017,node-rest-shop-shard-00-02-umxws.mongodb.net:27017/test?ssl=true&replicaSet=node-rest-shop-shard-0&authSource=admin');
+mongoose.connect("mongodb://node-shop:"+process.env.MONGO_ATLAS_PWD +"@node-rest-shop-shard-00-00-umxws.mongodb.net:27017,node-rest-shop-shard-00-01-umxws.mongodb.net:27017,node-rest-shop-shard-00-02-umxws.mongodb.net:27017/test?ssl=true&replicaSet=node-rest-shop-shard-0&authSource=admin");
 
 // INIT APP
 const app = express();
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
     if(req.method === 'OPTIONS'){
-        res.header("Access-Control-Allow-Methods", "POST, POST, DELETE, PATCH, GET");
+        res.header("Access-Control-Allow-Methods", "POST, PUT, DELETE, PATCH, GET");
         return res.status(200).json({});
     }
     next();
