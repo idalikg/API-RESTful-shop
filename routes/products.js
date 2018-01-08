@@ -28,10 +28,7 @@ routeProduct.get("/:productID", (req, res, next) => {
 
     query.exec().then(doc=>{
         if (doc) {
-            res.status(200).json({
-                message: 'Producto Encontrado',
-                doc
-                });
+            res.status(200).json(doc);
             } else {
                 res.status(404).json({message: 'Valor ID inválido'});
         }
@@ -69,9 +66,44 @@ routeProduct.post('/', (req, res, next) => {
 });
 
 routeProduct.patch('/:productID', (req, res, next) => {
-    res.status(200).send({
-        message : 'Product UPDATED'
-    })
+    const productoID = req.params.productID; // valor ID del producto a actualizar
+
+    // objeto que vacío donde se almacenarán todos los atributos y los valores que posee el documento a actualizar, es decir, un producto
+    const opcionesCambios = {};
+
+    // iteración sobre los datos que serán parseados - es decir, capturados - demtro del cuerpo del documento
+    for( const cambio of req.body ){
+
+        /* Declaración de la estructura del arreglo donde serán recolectados todos los atributos y valores que tiene cada documento (es decir, un producto ) para llenar el objeto vacío 'opcionesCambios'*/
+
+        opcionesCambios[cambio.atributo] = cambio.valor; 
+
+        // cambio.atributo variable equivalente al nombre de cada atributo
+        // cambio.valor variable equivalente al valor de cada atributo
+    }
+
+    // consulta y métodos para ejecutar la actualización de datos
+    Product.update({ _id : productoID }, { $set: opcionesCambios } ).exec().then( actualizado => {
+        console.log(actualizado);
+        res.status(200).json(actualizado);
+    }).catch( err => {
+        console.log(err);
+        res.status(500).json({
+            ERROR : err
+        });
+    });
+
+    // Ejemplo de como testear la petición del método PATCH en Postman
+   /*  
+
+        [
+            {
+                "atributo" : "nombre", "valor" : "samsung"
+            }
+        ]
+        
+    */
+
 });
 
 routeProduct.delete('/:productID', (req, res, next) => {
@@ -85,7 +117,7 @@ routeProduct.delete('/:productID', (req, res, next) => {
             ERROR : err
         });
     });
-    
+
 });
 
 module.exports = routeProduct;
