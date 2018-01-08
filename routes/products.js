@@ -75,9 +75,17 @@ routeProduct.patch('/:productID', (req, res, next) => {
 });
 
 routeProduct.delete('/:productID', (req, res, next) => {
-    res.status(200).send({
-        message : 'Product was deleted'
+    const productoID = req.params.productID; // valor ID del producto a eliminar
+
+    // consulta y metódos para eliminar un producto
+    Product.remove({ _id : productoID }).exec().then( eliminado => {
+            res.status(200).json({ message: `Elemento eliminado satisfactoriamente: ${productoID}`});
+        }).catch( err => {
+        res.status(500).json({
+            ERROR : err
+        });
     });
+    
 });
 
 module.exports = routeProduct;
