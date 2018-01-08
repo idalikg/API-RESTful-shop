@@ -7,9 +7,18 @@ const routeProduct = express.Router();
 const Product = require('../models/product');
 
 routeProduct.get('/', (req, res, next) => {
-    res.status(200).send({
-        message : 'List products'
+    
+    // consulta y métodos para ejecutar búsqueda
+    Product.find().exec().then( docs => {
+        if(Product.length >= 0){ //si la longitud del objeto Product es mayoo a cero
+            res.status(200).json(docs); // SI hay documentos (productos)
+        } else { //si no
+            res.status(500).json({ message : 'No hay productos' }); // NO hay documentos
+        }
+    }).catch( err => {
+        ERROR : err
     });
+
 });
 
 routeProduct.get("/:productID", (req, res, next) => {
